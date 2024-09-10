@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Inicio - Búsqueda</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .search-form {
+            margin-bottom: 20px;
+        }
+
+        .search-form input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .search-form button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .search-form button:hover {
+            background-color: #45a049;
+        }
+
+        .results-section {
+            margin-top: 20px;
+        }
+
+        .results-section h2 {
+            color: #4CAF50;
+            font-size: 20px;
+        }
+
+        .results-section .result-item {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .no-results {
+            color: #999;
+            font-size: 16px;
+        }
+
+        /* Estilo para los botones de agregar */
+        .add-buttons {
+            margin-top: 20px;
+        }
+
+        .add-buttons a {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        .add-buttons a:hover {
+            background-color: #45a049;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>¡Bienvenido a la Página de Inicio!</h1>
+
+        <!-- Formulario de búsqueda -->
+        <form class="search-form" method="GET" action="">
+            <input type="text" name="q" placeholder="Buscar cliente, país o comida..." value="{{ query }}">
+            <button type="submit">Buscar</button>
+        </form>
+
+        <!-- Mostrar los resultados de la búsqueda -->
+        <div class="results-section">
+            {% if query %}
+                <h2>Resultados para "{{ query }}":</h2>
+
+                <!-- Resultados de clientes -->
+                <h3>Clientes:</h3>
+                {% if clientes %}
+                    {% for cliente in clientes %}
+                        <div class="result-item">{{ cliente.nombre }} {{ cliente.apellido }} - RUT: {{ cliente.rut }}</div>
+                    {% endfor %}
+                {% else %}
+                    <div class="no-results">No se encontraron clientes.</div>
+                {% endif %}
+
+                <!-- Resultados de países -->
+                <h3>Paises:</h3>
+                {% if paises %}
+                    {% for pais in paises %}
+                        <div class="result-item">{{ pais.pais }} - Ciudad: {{ pais.ciudad }}</div>
+                    {% endfor %}
+                {% else %}
+                    <div class="no-results">No se encontraron países.</div>
+                {% endif %}
+
+                <!-- Resultados de comidas -->
+                <h3>Comidas:</h3>
+                {% if comidas %}
+                    {% for comida in comidas %}
+                        <div class="result-item">Fondo: {{ comida.fondo }}, Bebida: {{ comida.bebida }}, Postre: {{ comida.postre }}</div>
+                    {% endfor %}
+                {% else %}
+                    <div class="no-results">No se encontraron comidas.</div>
+                {% endif %}
+            {% else %}
+                <p>Introduce una palabra para buscar (puede ser para cliente, pais o comida).</p>
+            {% endif %}
+        </div>
+
+        <!-- Botones para agregar Cliente, País o Comida -->
+        <div class="add-buttons">
+            <a href="{% url 'agregar_cliente' %}">Agregar Cliente</a>
+            <a href="{% url 'agregar_pais' %}">Agregar País</a>
+            <a href="{% url 'agregar_comida' %}">Agregar Comida</a>
+        </div>
+    </div>
+</body>
+</html>
